@@ -26,7 +26,7 @@ affinityscore_india[is.na(affinityscore_india) ] <- mean(affinityscore_india, na
 
 ```
 
-1.) Pooled OLS
+# 1.) Pooled OLS
 Simple OLS regression that ignores the time and group aspect of the data.
 ```
 pooled = lm(no_votes~yes_votes+abstain+idealpoint_estimate+affinityscore_usa+affinityscore_brazil+affinityscore_china+affinityscore_india
@@ -44,12 +44,36 @@ Pooled2=plm(no_votes~yes_votes+abstain+idealpoint_estimate+affinityscore_usa+aff
 summary(Pooled2)
 ```
 ![image](https://user-images.githubusercontent.com/64437206/110038688-b0d52800-7d05-11eb-859c-c0f11cb0a728.png)
+
 There were a lot of significant years that affected the number of no votes. Adjusted R-squared increased to .75, meaning 75% of the variation of no_votes is explained by the model.
+```
+# You can also you need this function to get cluster robust standard errors clustered by time. (can be group or both)
+coeftest(Pooled2,vcov.=vcovHC,cluster="time")
+```
 
 Fixed 
 
-2.) Fixed Effects
+# 2.) Fixed Effects
 Takes into consideration group variable
+```
+fixedeffects =plm(no_votes~yes_votes+abstain+idealpoint_estimate+affinityscore_usa+affinityscore_brazil+affinityscore_china+affinityscore_india
+        +affinityscore_israel+affinityscore_russia,data=paneldata,index=c("state_name","year"),model='within')
+summary(fixedeffects)
+```
+![image](https://user-images.githubusercontent.com/64437206/110040484-85a00800-7d08-11eb-82f3-fc37cfed1b97.png)
 
-3.) Random Effects
+Pretty low R-squared of .27, this is most likely ddue to  missing important time related factors.
+
+OlS with dummy variables for country
+
+```
+olscountrydv =lm(no_votes~yes_votes+abstain+idealpoint_estimate+affinityscore_usa+affinityscore_brazil+affinityscore_china+affinityscore_india
+      +affinityscore_israel+affinityscore_russia+factor(state_name),data=paneldata)
+summary(olscountrydv)
+```
+![image](https://user-images.githubusercontent.com/64437206/110040603-b2ecb600-7d08-11eb-9d5a-2bd85ac4489b.png)
+Actually performs quite well with an adjusted R-squared of .786.
+
+# 3.) Random Effects
+
 Takes into consideration group and time variabes eliminating bias from unobserved time related factors. 
