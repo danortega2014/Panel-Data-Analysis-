@@ -6,7 +6,7 @@ Panel data is essentially cross sectional data but rather than sampled once, it 
 This code compares three panel data regression techniques: Pooled OlS, Fixed Effects, and Random Effects.
 
 ----
-Data Description
+
 
 
 Imputed all NA's with averages 
