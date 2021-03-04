@@ -6,10 +6,12 @@ Panel data is essentially cross sectional data but rather than sampled once, it 
 This code compares three panel data regression techniques: Pooled OlS, Fixed Effects, and Random Effects.
 
 ----
+# Data Description
+![image](https://user-images.githubusercontent.com/64437206/110016169-55e20780-7cea-11eb-80fd-8c46a426b9fa.png)
 
 
 
-Imputed all NA's with averages 
+Lots of missing values in this data so I imputed all NA's with averages.
 ```
 abstain[is.na(abstain) ] <- mean(abstain, na.rm = TRUE)
 yes_votes[is.na(yes_votes) ] <- mean(yes_votes, na.rm = TRUE)   
