@@ -11,7 +11,7 @@ This code compares three panel data regression techniques: Pooled OlS, Fixed Eff
 
 
 
-Lots of missing values in this data so I imputed all NA's with averages.
+Lots of missing values in this data so I imputed all NA's with averages for the continuous variables. Excluded the missing values for categorical variable years in excel. 
 ```
 abstain[is.na(abstain) ] <- mean(abstain, na.rm = TRUE)
 yes_votes[is.na(yes_votes) ] <- mean(yes_votes, na.rm = TRUE)   
@@ -31,7 +31,21 @@ Simple OLS regression that ignores the time and group aspect of the data.
 ```
 pooled = lm(no_votes~yes_votes+abstain+idealpoint_estimate+affinityscore_usa+affinityscore_brazil+affinityscore_china+affinityscore_india
 +affinityscore_israel+affinityscore_russia,data=paneldata)
+
+summary(pooled)
 ```
+![image](https://user-images.githubusercontent.com/64437206/110038333-373d3a00-7d05-11eb-89e0-b0f9a645ec04.png)
+
+.65  adjusted  r-squared, can be better with time dummy variables.
+```
+#Pooled OLS estimator with time dummies:
+Pooled2=plm(no_votes~yes_votes+abstain+idealpoint_estimate+affinityscore_usa+affinityscore_brazil+affinityscore_china+affinityscore_india
+            +affinityscore_israel+affinityscore_russia+factor(year),data=paneldata,index=c("state_name","year"),model='pooling')
+summary(Pooled2)
+```
+![image](https://user-images.githubusercontent.com/64437206/110038688-b0d52800-7d05-11eb-859c-c0f11cb0a728.png)
+There were a lot of significant years that affected the number of no votes. Adjusted R-squared increased to .75, meaning 75% of the variation of no_votes is explained by the model.
+
 Fixed 
 
 2.) Fixed Effects
