@@ -47,11 +47,12 @@ summary(Pooled2)
 
 There were a lot of significant years that affected the number of no votes. Adjusted R-squared increased to .75, meaning 75% of the variation of no_votes is explained by the model.
 ```
-# You can also you need this function to get cluster robust standard errors clustered by time. (can be group or both)
+# can use this function to get cluster robust standard errors clustered by time. (can be group or both)
+
 coeftest(Pooled2,vcov.=vcovHC,cluster="time")
 ```
 
-Fixed 
+ 
 
 # 2.) Fixed Effects
 Takes into consideration group variable
@@ -62,7 +63,7 @@ summary(fixedeffects)
 ```
 ![image](https://user-images.githubusercontent.com/64437206/110040484-85a00800-7d08-11eb-82f3-fc37cfed1b97.png)
 
-Pretty low R-squared of .27, this is most likely ddue to  missing important time related factors.
+Pretty low R-squared of .27, this is most likely due to  missing important time related factors.
 
 OlS with dummy variables for country
 
@@ -72,8 +73,29 @@ olscountrydv =lm(no_votes~yes_votes+abstain+idealpoint_estimate+affinityscore_us
 summary(olscountrydv)
 ```
 ![image](https://user-images.githubusercontent.com/64437206/110040603-b2ecb600-7d08-11eb-9d5a-2bd85ac4489b.png)
-Actually performs quite well with an adjusted R-squared of .786.
+
+Actually performs quite well with an adjusted R-squared of .786. However is still missing time related factors. 
 
 # 3.) Random Effects
 
-Takes into consideration group and time variabes eliminating bias from unobserved time related factors. 
+Takes into consideration group and time variabes eliminating bias from unobserved time related factors.
+
+```
+#random effects model
+randomeffects=plm(no_votes~yes_votes+abstain+idealpoint_estimate+affinityscore_usa+affinityscore_brazil+affinityscore_china+affinityscore_india
+                  +affinityscore_israel+affinityscore_russia,data=paneldata,index=c("state_name","year"),model='random')
+summary(randomeffects)
+```
+![image](https://user-images.githubusercontent.com/64437206/110041555-df550200-7d09-11eb-8965-b68f8bebaf70.png)
+
+Predictive power is still relatively low, let's try adding time dummy variables:
+
+```
+randomeffect2 =plm(no_votes~yes_votes+abstain+idealpoint_estimate+affinityscore_usa+affinityscore_brazil+affinityscore_china+affinityscore_india
+        +affinityscore_israel+affinityscore_russia,data=paneldata,index=c("state_name","year"),effect="time",model='random')
+summary(randomeffect2)
+```
+![image](https://user-images.githubusercontent.com/64437206/110041609-f98ee000-7d09-11eb-9937-07477249e927.png)
+
+72% of variation within the data no_votes can be explained by our random effects model.
+
