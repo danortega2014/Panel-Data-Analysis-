@@ -99,3 +99,7 @@ summary(randomeffect2)
 
 72% of variation within the data no_votes can be explained by our random effects model.
 
+Panel Data conclusion:
+
+Fixed effects with dummy for countries had the highest predictive power with an adjusted of R squared .78.
+2nd was OLS with time dummies adjusted with an adjusted R squared .75. Lastly, random effects with time dummies had an adjusted R squared of .72.  All models had very similar predictive power, the DV effect of being in a certain country had slightly higher significance than the no_votes being in a certain year.
