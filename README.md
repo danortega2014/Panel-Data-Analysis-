@@ -4,11 +4,15 @@ Panel Data Regression models UN general assembly data from https://www.kaggle.co
 Panel data is essentially cross sectional data but rather than sampled once, it is sampled many times adding a time aspect to the data that can be controlled for as well as group variables (in this case nations). Controlling for time can allow the ability to see variables that change over time but are constant amongst certain groups. 
 
 This code compares three panel data regression techniques: Pooled OlS, Fixed Effects, and Random Effects.
+````
+#Packages required
+library(plm) #for panel data regressions
 
-----
+```
+
+
 # Data Description
 ![image](https://user-images.githubusercontent.com/64437206/110016169-55e20780-7cea-11eb-80fd-8c46a426b9fa.png)
-
 
 
 Lots of missing values in this data so I imputed all NA's with averages for the continuous variables. Excluded the missing values for categorical variable years in excel. 
