@@ -5,6 +5,10 @@ Panel data is essentially cross sectional data but rather than sampled once, it 
 
 This code compares three panel data regression techniques: Pooled OlS, Fixed Effects, and Random Effects.
 
+Assumptions of each model:
+1. Pooled Effects assumes that there are universal effects across time and that there is individual heterogeneity
+2. Fixed Effecs asssumes individual heterogeneity that does not vary over time, and that may or may not be correlated with dependent variable. 
+3. Assumes both individual heterogeneity as well as time constant attributes 
 ```
 #Packages required
 library(plm) #for panel data regressions
@@ -83,7 +87,7 @@ Actually performs quite well with an adjusted R-squared of .786. However is stil
 
 # 3.) Random Effects
 
-Takes into consideration group and time variabes eliminating bias from unobserved time related factors.
+Takes into consideration group and time variables, eliminating bias from unobserved time related factors (prevents omitted variable bias).
 
 ```
 #random effects model
