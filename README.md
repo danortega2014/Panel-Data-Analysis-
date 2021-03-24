@@ -1,14 +1,20 @@
 # Panel-Data-Regression
-Panel Data Regression models UN general assembly data from https://www.kaggle.com/unitednations/general-assembly
+Panel Data Regression models UN general assembly data from https://www.kaggle.com/unitednations/general-assembly (compiled and published by Professor Erik Voeten of Georgetown University.)
 
 Panel data is essentially cross sectional data but rather than sampled once, it is sampled many times adding a time aspect to the data that can be controlled for as well as group variables (in this case nations). Controlling for time can allow the ability to see variables that change over time but are constant amongst certain groups. 
+
+
+This U.N assembly voting data qualifies as panel data because it
+
+ 1.) Samples the same group muliple times, throughout time
+ 2.) collects attributes on these groups (yes votes, no vote, abstain, affinity scores)
 
 This code compares three panel data regression techniques: Pooled OlS, Fixed Effects, and Random Effects.
 
 Assumptions of each model:
 1. Pooled Effects assumes that there are universal effects across time and that there is individual heterogeneity
 2. Fixed Effecs asssumes individual heterogeneity that does not vary over time, and that may or may not be correlated with dependent variable. 
-3. Assumes both individual heterogeneity as well as time constant attributes 
+3. Random effects asume there is unique, time constant atributes of groups/individuals (not correlated with regressors)
 ```
 #Packages required
 library(plm) #for panel data regressions
